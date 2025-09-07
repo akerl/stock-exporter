@@ -7,7 +7,6 @@ import (
 	"github.com/akerl/stock-exporter/fetcher"
 	"github.com/akerl/stock-exporter/server"
 
-	"github.com/akerl/metrics/metrics"
 	"github.com/spf13/cobra"
 )
 
@@ -22,10 +21,10 @@ func serveRunner(_ *cobra.Command, args []string) error {
 		return err
 	}
 
-	mf := metrics.MetricFile{}
+	cache := config.Cache{}
 
-	f := fetcher.NewFetcher(conf, &mf)
-	s := server.NewServer(conf, &mf)
+	f := fetcher.NewFetcher(conf, &cache)
+	s := server.NewServer(conf, &cache)
 
 	f.RunAsync()
 	return s.Run()

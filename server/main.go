@@ -7,7 +7,6 @@ import (
 
 	"github.com/akerl/stock-exporter/config"
 
-	"github.com/akerl/metrics/metrics"
 	"github.com/akerl/timber/v2/log"
 )
 
@@ -15,15 +14,15 @@ var logger = log.NewLogger("stock-exporter.server")
 
 // Server defines a Prometheus-compatible metrics engine
 type Server struct {
-	Port       int
-	MetricFile *metrics.MetricFile
+	Port  int
+	Cache *config.Cache
 }
 
 // NewServer creates a new Server object
-func NewServer(conf config.Config, mf *metrics.MetricFile) *Server {
+func NewServer(conf config.Config, cache *config.Cache) *Server {
 	return &Server{
-		Port:       conf.Port,
-		MetricFile: mf,
+		Port:  conf.Port,
+		Cache: cache,
 	}
 }
 
@@ -37,11 +36,11 @@ func (s *Server) Run() error {
 }
 
 func (s *Server) handleMetrics(w http.ResponseWriter, _ *http.Request) {
-	if !s.MetricFile.Validate() {
+	if !s.Cache.MetricSet.Validate() {
 		logger.InfoMsg("invalid metrics file requested")
 		http.Error(w, "invalid metrics file", http.StatusInternalServerError)
 	} else {
 		logger.InfoMsg("successful metrics request")
-		io.WriteString(w, s.MetricFile.String())
+		io.WriteString(w, s.Cache.MetricSet.String())
 	}
 }
