@@ -1,14 +1,16 @@
 package fetcher
 
 import (
+	"context"
 	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/akerl/stock-exporter/config"
 
+	finnhub "github.com/Finnhub-Stock-API/finnhub-go/v2"
 	"github.com/akerl/metrics/metrics"
 	"github.com/akerl/timber/v2/log"
-	yfa "github.com/oscarli916/yahoo-finance-api"
 )
 
 var logger = log.NewLogger("stock-exporter.fetcher")
@@ -18,6 +20,8 @@ type Fetcher struct {
 	Interval int
 	Tickers  []string
 	Cache    *config.Cache
+	Token    string
+	client   *finnhub.DefaultApiService
 }
 
 // NewFetcher creates a new syslog engine from the given config
@@ -25,6 +29,7 @@ func NewFetcher(conf config.Config, cache *config.Cache) *Fetcher {
 	return &Fetcher{
 		Interval: conf.Interval,
 		Tickers:  conf.Tickers,
+		Token:    conf.Token,
 		Cache:    cache,
 	}
 }
@@ -58,19 +63,29 @@ func (f *Fetcher) Run() {
 	}
 }
 
+func (f *Fetcher) newClient() *finnhub.DefaultApiService {
+	cfg := finnhub.NewConfiguration()
+	cfg.AddDefaultHeader("X-Finnhub-Token", f.Token)
+	return finnhub.NewAPIClient(cfg).DefaultApi
+}
+
 func (f *Fetcher) fetchMetric(symbol string) (metrics.Metric, error) {
-	t := yfa.NewTicker(symbol)
-	info, err := t.Info()
+	if f.client == nil {
+		f.client = f.newClient()
+	}
+
+	res, _, err := f.client.Quote(context.Background()).Symbol(symbol).Execute()
 	if err != nil {
 		return metrics.Metric{}, err
 	}
+
 	m := metrics.Metric{
 		Name: "ticker",
 		Type: "gauge",
 		Tags: map[string]string{
 			"symbol": symbol,
 		},
-		Value: info.RegularMarketPrice.Fmt,
+		Value: strconv.FormatFloat(float64(*res.C), 'f', 2, 32),
 	}
 	return m, nil
 }

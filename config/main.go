@@ -15,6 +15,7 @@ type Config struct {
 	Port     int      `json:"port"`
 	Interval int      `json:"interval"`
 	Tickers  []string `json:"tickers"`
+	Token    string   `json:"token"`
 }
 
 // Cache shares a MetricSet between a writer and a reader
