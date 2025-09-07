@@ -16,7 +16,6 @@ var logger = log.NewLogger("stock-exporter.fetcher")
 // Fetcher defines the ticker fetching engine
 type Fetcher struct {
 	Interval int
-	Token    string
 	Tickers  []string
 	Cache    *config.Cache
 }
@@ -25,7 +24,6 @@ type Fetcher struct {
 func NewFetcher(conf config.Config, cache *config.Cache) *Fetcher {
 	return &Fetcher{
 		Interval: conf.Interval,
-		Token:    conf.Token,
 		Tickers:  conf.Tickers,
 		Cache:    cache,
 	}
