@@ -35,8 +35,8 @@ github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/Finnhub-Stock-API/finnhub-go/v2 v2.0.19 h1:uU1QvzKvuXFI4VDoJN3enOUvPL7A44m1TmD5NWVHvRM=
 github.com/Finnhub-Stock-API/finnhub-go/v2 v2.0.19/go.mod h1:QMfTqyJoQPPsDu6yAvVaTXSLtN0v8rBIn61fgzUN6CM=
-github.com/akerl/metrics v0.0.3 h1:cUUhmDjtxAmjrsKxBfAdOyYexsxAmAbtVPibda3xz4Q=
-github.com/akerl/metrics v0.0.3/go.mod h1:9At5yZEcc8Dvd7S/14xcW8NWwawW/jVCY+tPH7ZV4+I=
+github.com/akerl/metrics v0.0.4 h1:RJ37RkqOaXKPxJq1uIAYkzbIj6SeRWsY8uBotz2ZXg4=
+github.com/akerl/metrics v0.0.4/go.mod h1:9At5yZEcc8Dvd7S/14xcW8NWwawW/jVCY+tPH7ZV4+I=
 github.com/akerl/timber/v2 v2.0.1 h1:hY4VCOJns7KsxwxP/ifSt3Rz9GZCfKewapaimObnA2E=
 github.com/akerl/timber/v2 v2.0.1/go.mod h1:jBjRGI2CWuvbZlrZkp1JO/X51pMlbg72NFy+Vnd59oI=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=

@@ -3,7 +3,6 @@ package config
 import (
 	"io/ioutil"
 
-	"github.com/akerl/metrics/metrics"
 	"github.com/akerl/timber/v2/log"
 	"github.com/ghodss/yaml"
 )
@@ -16,11 +15,6 @@ type Config struct {
 	Interval int      `json:"interval"`
 	Tickers  []string `json:"tickers"`
 	Token    string   `json:"token"`
-}
-
-// Cache shares a MetricSet between a writer and a reader
-type Cache struct {
-	MetricSet metrics.MetricSet
 }
 
 // LoadConfig creates a config from a file path

@@ -10,6 +10,7 @@ import (
 
 	finnhub "github.com/Finnhub-Stock-API/finnhub-go/v2"
 	"github.com/akerl/metrics/metrics"
+	"github.com/akerl/metrics/server"
 	"github.com/akerl/timber/v2/log"
 )
 
@@ -19,13 +20,13 @@ var logger = log.NewLogger("stock-exporter.fetcher")
 type Fetcher struct {
 	Interval int
 	Tickers  []string
-	Cache    *config.Cache
+	Cache    *server.Cache
 	Token    string
 	client   *finnhub.DefaultApiService
 }
 
 // NewFetcher creates a new syslog engine from the given config
-func NewFetcher(conf config.Config, cache *config.Cache) *Fetcher {
+func NewFetcher(conf config.Config, cache *server.Cache) *Fetcher {
 	return &Fetcher{
 		Interval: conf.Interval,
 		Tickers:  conf.Tickers,
